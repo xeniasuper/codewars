@@ -169,3 +169,47 @@ function duplicateCount(text){
 
     return counter;
 }
+
+// Problem 7
+// Given an integral number, determine if it's a square number
+
+/**
+ * Determines if a number is a square
+ * @param {number} num
+ * @return {boolean}
+ */
+function isSquare(num){
+    return Math.sqrt(num) === Math.ceil(Math.sqrt(num));
+}
+
+// Problem 8
+// In DNA strings, symbols "A" and "T" are complements of each other, as "C" and "G".
+// You have function with one side of the DNA; you need to get the other complementary side.
+// DNA strand is never empty or there is no DNA at all.
+
+/**
+ * Get the complementary side of a DNA string
+ * @param {string} dna
+ * @return {string}
+ */
+function DNAStrand(dna){
+    let complementary = "";
+    
+    for (let i = 0; i < dna.length; i++) {
+        switch (dna[i]) {
+            case "A":
+                complementary += "T";
+                break;
+            case "T":
+                complementary += "A";
+                break;
+            case "C":
+                complementary += "G";
+                break;
+            case "G":
+                complementary += "C";
+                break;
+        }
+    }
+    return complementary;
+}
