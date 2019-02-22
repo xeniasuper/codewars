@@ -62,4 +62,40 @@ function findShort(s){
    return min;
 }
 
-console.log(findShort("bitcoin take over the world maybe who knows perhaps"));
+//console.log(findShort("bitcoin take over the world maybe who knows perhaps"));
+
+// Write a function that takes a string of braces, and determines if the order of the braces is valid. 
+// It should return true if the string is valid, and false if it's invalid.
+// All input strings will be nonempty, and will only consist of parentheses, brackets and curly braces: ()[]{}.
+// A string of braces is considered valid if all braces are matched with the correct brace.
+
+
+function validBraces(braces) {
+    let stack = [];
+    let bracesPairs = {
+        "{": "}",
+        "(": ")",
+        "[": "]"
+    };
+
+    for (let i = 0; i < braces.length; i++) {
+        let brace = braces[i];
+
+        if (bracesPairs.hasOwnProperty(brace)) {
+            // then we met an opening brace
+            stack.push(brace);
+        } else {
+            // then we met a closing brace
+            let lastIdx = stack.length - 1;
+
+            if (bracesPairs[stack[lastIdx]] === brace) {
+                stack.pop()
+            } else {
+                return false;
+            }
+        }
+    }
+    return stack.length === 0;
+}
+
+console.log(validBraces( "[{}]" ));
