@@ -1,4 +1,6 @@
 "use strict";
+
+// Problem 1
 // Write a function, persistence, that takes in a positive parameter num and returns its multiplicative persistence,
 // which is the number of times you must multiply the digits in num until you reach a single digit.
 
@@ -22,8 +24,10 @@ function getDigits(num) {
 
 //console.log(getDigits(156));
 
+
+// // Problem 2
 /**
- * Counts the number of times you must multiply digits in a number until you reach a single digit
+ * Counts the number of times you must multiply digits in a number until reaches a single digit
  * @param {number} num
  * @return {number}
  */
@@ -43,6 +47,7 @@ function persistence(num) {
 
 //console.log(persistence(39));
 
+// Problem 3
 //Simple, given a string of words, return the length of the shortest word(s).
 // String will never be empty and you do not need to account for different data types.
 
@@ -64,6 +69,8 @@ function findShort(s){
 
 //console.log(findShort("bitcoin take over the world maybe who knows perhaps"));
 
+
+// Problem 4
 // Write a function that takes a string of braces, and determines if the order of the braces is valid. 
 // It should return true if the string is valid, and false if it's invalid.
 // All input strings will be nonempty, and will only consist of parentheses, brackets and curly braces: ()[]{}.
