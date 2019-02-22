@@ -70,6 +70,11 @@ function findShort(s){
 // A string of braces is considered valid if all braces are matched with the correct brace.
 
 
+/**
+ * Determines if the order of the braces is valid
+ * @param {string} braces
+ * @return {boolean}
+ */
 function validBraces(braces) {
     let stack = [];
     let bracesPairs = {
@@ -98,4 +103,4 @@ function validBraces(braces) {
     return stack.length === 0;
 }
 
-console.log(validBraces( "[{}]" ));
+//console.log(validBraces( "[{}]" ));
