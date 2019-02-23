@@ -254,3 +254,49 @@ function validParentheses(parens){
     }
     return stack.length === 0;
 }
+
+// Problem 11
+// Given an array, find the int that appears an odd number of times.
+
+/**
+ * Finds the int that appears an odd number of times.
+ * @param {array} arr
+ * @return {number}
+ */
+function findOdd(arr) {
+    let times = {};
+    for (let i = 0; i < arr.length; i++) {
+        if (!times.hasOwnProperty(arr[i])) {
+            times[arr[i]] = 1;
+        } else {
+            times[arr[i]]++;
+        }
+    }
+    for (let elem in times) {
+        if(times[elem] % 2 !== 0) return Number(elem);
+    }
+    return 0;
+}
+
+// Problem 12
+// Write a number in the expanded form
+// Example
+// 341 = 300 + 40 + 1
+
+/**
+ * Writes a number in the expanded form
+ * @param {number} num
+ * @return {string}
+ */
+function expandedForm(num) {
+    let expanded = [];
+    let pwrOfTen = 0;
+
+    while (num >= 1) {
+        if (num % 10 !== 0) expanded.unshift(num%10 * 10**pwrOfTen);
+        num -= num % 10;
+        num /= 10;
+        pwrOfTen++;
+    }
+    return expanded.join(" + ");
+}
