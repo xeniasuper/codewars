@@ -223,11 +223,34 @@ function DNAStrand(dna){
  */
 function isPrime(num) {
     if (num <= 1) return false;
-    
+
     let divisors = 1;
     for (let i = 2; i <= num; i++) {
         if (num % i === 0) divisors++;
         if (divisors > 2) return false;
     }
     return true;
+}
+
+// Problem 10
+//Write a function that takes a string of parentheses, and determines if the order of the parentheses is valid.
+// The function should return true if the string is valid, and false if it's invalid.
+
+/**
+ * Determines if the order of the parentheses is valid.
+ * @param {string} parens
+ * @return {boolean}
+ */
+function validParentheses(parens){
+    let stack = [];
+
+    for (let i = 0; i < parens.length; i++) {
+        if (parens[i] === "(") {
+            stack.push(parens[i]);
+        } else {
+            let pop = stack.pop();
+            if (pop === undefined) return false;
+        }
+    }
+    return stack.length === 0;
 }
