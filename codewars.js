@@ -194,7 +194,6 @@ function isSquare(num){
  */
 function DNAStrand(dna){
     let complementary = "";
-    
     for (let i = 0; i < dna.length; i++) {
         switch (dna[i]) {
             case "A":
@@ -212,4 +211,23 @@ function DNAStrand(dna){
         }
     }
     return complementary;
+}
+
+// Problem 9
+// Detect whether a number is prime
+
+/**
+ * Detects whether a number is prime
+ * @param {number} num
+ * @return {boolean}
+ */
+function isPrime(num) {
+    if (num <= 1) return false;
+    
+    let divisors = 1;
+    for (let i = 2; i <= num; i++) {
+        if (num % i === 0) divisors++;
+        if (divisors > 2) return false;
+    }
+    return true;
 }
