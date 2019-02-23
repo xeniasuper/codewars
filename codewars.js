@@ -300,3 +300,37 @@ function expandedForm(num) {
     }
     return expanded.join(" + ");
 }
+
+// Problem 13
+// Your job is to write a function which increments a string, to create a new string.
+// If the string already ends with a number, the number should be incremented by 1.
+// If the string does not end with a number the number 1 should be appended to the new string.
+// Example
+// foo -> foo1
+// bar02 -> bar03
+// foobar12 -> 13
+// " " -> 1
+
+/**
+ *  Increments a string
+ * @param string
+ * @return {*}
+ */
+function incrementString (string) {
+    // return incrementedString
+    let idxNum = string.search(/\d/);
+    if (idxNum === -1) return string + 1;
+
+    let text = string.slice(0, idxNum);
+    let num = Number(string.slice(idxNum));
+
+    num++;
+
+    let zeros = string.length - (text + num).length;
+    if (zeros > 0) {
+        for (let i = 0; i < zeros; i++) {
+            text += 0;
+        }
+    }
+    return text + num;
+}
