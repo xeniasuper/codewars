@@ -313,8 +313,8 @@ function expandedForm(num) {
 
 /**
  *  Increments a string
- * @param string
- * @return {*}
+ * @param {string} string
+ * @return {string}
  */
 function incrementString (string) {
     // return incrementedString
@@ -334,3 +334,73 @@ function incrementString (string) {
     }
     return text + num;
 }
+
+// Problem 14
+// Find lowest common denominator of an array of fractions and convert the array to the string
+// Example
+// [[1, 2], [1, 3], [1, 4]] -> "(6, 12)(4, 12)(3, 12)"
+
+// there are 3 helpers: gcd(), lcm() and packTwoDim(), they are below convertFrac();
+/**
+ * Find lowest common denominator of an array of fractions and convert the array to the string
+ * @param {array} arr
+ * @return {string}
+ */
+function convertFrac(arr){
+    //Your code here
+    if (arr.length === 0) return "";
+
+    let converted = "";
+    let numers = packTwoDim(arr, 0);
+    let denoms = packTwoDim(arr, 1);
+
+    let lcmDenom = denoms.reduce((accum, curr)=>{
+        return lcm(accum, curr);
+    });
+
+    for (let i = 0; i < numers.length; i++) {
+        numers[i] *= lcmDenom / denoms[i];
+        converted += "("+ numers[i] + "," + lcmDenom +")";
+    }
+
+    return converted;
+}
+
+/**
+ * Find the greates common divider of the two numbers
+ * @param {number} num1
+ * @param {number} num2
+ * @return {number}
+ */
+function gcd(num1, num2) {
+    let max = Math.max(num1, num2);
+    let min = Math.min(num1, num2);
+
+    if (min === 0) return max;
+    return gcd(min, max % min);
+}
+
+/**
+ * Finds the least common multiple of two numbers
+ * @param num1
+ * @param num2
+ * @return {number}
+ */
+function lcm(num1, num2) {
+    return Math.abs(num1* num2) / gcd(num1, num2);
+}
+
+/**
+ * Packs all elements of a 2D array that are array[i][idx] to another array
+ * Example
+ * packTwoDim([[1, 2], [3, 4]], 0) -> [1, 3]
+ * @param {array} arr
+ * @param {number} idx
+ * @return {array}
+ */
+function packTwoDim(arr, idx) {
+    let pack = [];
+    for (let i = 0; i < arr.length; i++) pack.push(arr[i][idx]);
+    return pack;
+}
+
