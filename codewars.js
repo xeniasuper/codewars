@@ -222,16 +222,11 @@ function DNAStrand(dna){
  * @return {boolean}
  */
 function isPrime(num) {
-    if (num <= 1) return false;
-
-    let divisors = 1;
-    for (let i = 2; i <= num; i++) {
-        if (num % i === 0) divisors++;
-        if (divisors > 2) return false;
+    for (let i = 2; i <= Math.sqrt(num); i++) {
+        if (num % i === 0) return false;
     }
-    return true;
+    return num > 1;
 }
-
 // Problem 10
 //Write a function that takes a string of parentheses, and determines if the order of the parentheses is valid.
 // The function should return true if the string is valid, and false if it's invalid.
@@ -404,3 +399,63 @@ function packTwoDim(arr, idx) {
     return pack;
 }
 
+// Problem 15
+// Translate a string to PigLatin
+// Example
+// Foo Bar -> ooFay arBay
+
+/**
+ * Translates a string to PigLatin
+ * @param {string} str
+ * @return {string}
+ */
+function pigIt(str){
+    //Code here
+    let words = str.split(" ");
+    let pig = [];
+
+    for (let i = 0; i < words.length; i++) {
+        if (!words[i].match(/[!.?,]/)) {
+            let pigWord = words[i].slice(1) + words[i].slice(0, 1) + "ay";
+            pig.push(pigWord);
+        } else {
+            pig.push(words[i])
+        }
+    }
+    return pig.join(" ");
+}
+
+// Problem 16
+// Given a positive number n > 1 find the prime factor decomposition of n.
+// Example
+// 86240 -> "(2**5)(5)(7**2)(11)"
+
+/**
+ * Finds the prime factor decomposition of num
+ * @param {number} num
+ * @return {string}
+ */
+function primeFactors(num){
+    //your code here
+    let str = "";
+    for (let i = 1; i <= num; i++) {
+        let pwr = 0;
+        if (isPrime(i)) {
+            if (num % i === 0) {
+                while (num % i === 0) {
+                    pwr++;
+                    num /= i;
+                }
+                switch (pwr) {
+                    case 1:
+                        str += "(" + i + ")";
+                        break;
+                    default:
+                        str += "(" + i + "**" + pwr + ")";
+                        break;
+                }
+            }
+        }
+    }
+    return str;
+}
