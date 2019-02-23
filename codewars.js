@@ -435,27 +435,17 @@ function pigIt(str){
  * @param {number} num
  * @return {string}
  */
-function primeFactors(num){
-    //your code here
-    let str = "";
-    for (let i = 1; i <= num; i++) {
+function primeFactors(num) {
+    let res = "";
+
+    for (let i = 2; i <= num; i++) {
         let pwr = 0;
-        if (isPrime(i)) {
-            if (num % i === 0) {
-                while (num % i === 0) {
-                    pwr++;
-                    num /= i;
-                }
-                switch (pwr) {
-                    case 1:
-                        str += "(" + i + ")";
-                        break;
-                    default:
-                        str += "(" + i + "**" + pwr + ")";
-                        break;
-                }
-            }
+
+        while (num % i == 0) {
+            pwr++;
+            num /= i;
         }
+        res += pwr ? "(" + (pwr > 1 ? i +"**"+ pwr : i) + ")" : "";
     }
-    return str;
+    return res || "(" + n + ")";
 }
