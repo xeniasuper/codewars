@@ -506,3 +506,57 @@ PaginationHelper.prototype.pageIndex = function(itemIndex) {
     return Math.floor(itemIndex / this.itemsPerPage);
 };
 
+Array.prototype.sameStructureAs = function (other) {
+    // Return 'true' if and only if 'other' has the same
+    // nesting structure as 'this'.
+
+    // Note: You are given a function isArray(o) that returns
+    // whether its argument is an array.
+
+
+    //let stack = [];
+    for (let i = 0; i < this.length; i++) {
+        if (this.length !== other.length) return false;
+        if (Array.isArray(this[i]) && Array.isArray(other[i])) {
+            this[i].sameStructureAs(other[i]);
+        } else if (!Array.isArray(this[i]) && !Array.isArray(other[i])){
+            continue;
+        } else {
+            return false;
+        }
+    }
+    return true;
+};
+
+// Problem 18
+// Complete the function/method (depending on the language) to return true/True when
+// its argument is an array that has the same nesting structure as the first array.
+// Example
+// should return true
+// [ 1, 1, 1 ].sameStructureAs( [ 2, 2, 2 ] );
+// [ 1, [ 1, 1 ] ].sameStructureAs( [ 2, [ 2, 2 ] ] );
+//
+// should return false
+// [ 1, [ 1, 1 ] ].sameStructureAs( [ [ 2, 2 ], 2 ] );
+// [ 1, [ 1, 1 ] ].sameStructureAs( [ [ 2 ], 2 ] );
+
+/**
+ * Checks whether its argument is an array that has the same nesting structure as the first array.
+ * @param {*} other
+ * @return {boolean}
+ */
+Array.prototype.sameStructureAs = function (other) {
+    if (Array.isArray(this) && !Array.isArray(other)) return false;
+
+    for (let i = 0; i < this.length; i++) {
+        if (this.length !== other.length) return false;
+
+        if (Array.isArray(this[i]) && Array.isArray(other[i])) {
+
+            if (!this[i].sameStructureAs(other[i])) return false;
+
+        } else if (Array.isArray(this[i]) || Array.isArray(other[i])) return false;
+    }
+    return true;
+};
+
