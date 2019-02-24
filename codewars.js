@@ -441,11 +441,67 @@ function primeFactors(num) {
     for (let i = 2; i <= num; i++) {
         let pwr = 0;
 
-        while (num % i == 0) {
+        while (num % i === 0) {
             pwr++;
             num /= i;
         }
         res += pwr ? "(" + (pwr > 1 ? i +"**"+ pwr : i) + ")" : "";
     }
-    return res || "(" + n + ")";
+    return res || "(" + num + ")";
 }
+
+// Problem 17
+// You will complete the PaginationHelper class,
+// which is a utility class helpful for querying paging information related to an array.
+// The class is designed to take in an array of values and an integer indicating how many items will be
+// allowed per each page. The types of values contained within the collection/array are not relevant.
+
+/**
+ * The constructor
+ * @param {array} collection - items
+ * @param {number} itemsPerPage - indicating how many items fit within a single page
+ * @constructor
+ */
+function PaginationHelper(collection, itemsPerPage){
+    this.collection = collection;
+    this.itemsPerPage = itemsPerPage;
+}
+
+// returns the number of items within the entire collection
+PaginationHelper.prototype.itemCount = function() {
+    return this.collection.length;
+};
+
+/**
+ * Counts number of pages
+ * @return {number}
+ */
+PaginationHelper.prototype.pageCount = function() {
+    return Math.ceil(this.itemCount() / this.itemsPerPage);
+};
+
+/**
+ * Counts the number of items on the current page
+ * @param {number} pageIndex - zero-based
+ * @return {number} - returns -1 for itemIndex values that are out of range
+ */
+PaginationHelper.prototype.pageItemCount = function(pageIndex) {
+    let length = this.collection.length;
+    if (this.itemCount() === 0) return 0;
+    if (pageIndex > this.pageCount()-1 || pageIndex < 0) return -1;
+    if (pageIndex === this.pageCount()-1) {
+        return this.itemCount() % this.itemsPerPage;
+    } else return this.itemsPerPage;
+};
+
+// determines what page an item is on. Zero based indexes
+// this method should return -1 for itemIndex values that are out of range
+/**
+ * Determines what page an item is on
+ * @param {number} itemIndex - zero-based
+ * @return {number} - returns -1 for itemIndex values that are out of range
+ */
+PaginationHelper.prototype.pageIndex = function(itemIndex) {
+    if (itemIndex > this.itemCount()-1 || itemIndex < 0) return -1;
+    return Math.floor(itemIndex / this.itemsPerPage);
+};
