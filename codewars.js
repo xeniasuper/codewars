@@ -486,10 +486,10 @@ PaginationHelper.prototype.pageCount = function() {
  * @return {number} - returns -1 for itemIndex values that are out of range
  */
 PaginationHelper.prototype.pageItemCount = function(pageIndex) {
-    let length = this.collection.length;
     if (this.itemCount() === 0) return 0;
     if (pageIndex > this.pageCount()-1 || pageIndex < 0) return -1;
     if (pageIndex === this.pageCount()-1) {
+        // then we're on the last page
         return this.itemCount() % this.itemsPerPage;
     } else return this.itemsPerPage;
 };
@@ -505,3 +505,4 @@ PaginationHelper.prototype.pageIndex = function(itemIndex) {
     if (itemIndex > this.itemCount()-1 || itemIndex < 0) return -1;
     return Math.floor(itemIndex / this.itemsPerPage);
 };
+
