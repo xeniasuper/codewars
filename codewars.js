@@ -537,3 +537,80 @@ Array.prototype.sameStructureAs = function (other) {
     return true;
 };
 
+
+// Problem 19
+// Write a function that gets n-th fibonacci in an efficient way
+/**
+ * Gets n-th fibonacci number
+ * @param {number} n
+ * @return {number}
+ */
+let fibonacci = function(n) {
+    if (n < 1) return 0;
+    let fibs = [1, 1];
+    function getFib(n) {
+        for (let i = 2; i <= n; i++) {
+            let prev = fibs[i-1];
+            let prevPrev = fibs[i-2];
+
+            fibs.push(prev + prevPrev);
+        }
+        return fibs[n];
+    }
+    return getFib(n-1);
+};
+
+// Problem 20
+// Given the string representations of two integers, return the string representation of the sum of those integers.
+// in case of big numbers - NO SCIENTIFIC NOTATION should be used
+
+/**
+ * Represents the sum of two integers
+ * @param {string} num1
+ * @param {string} num2
+ * @return {string}
+ */
+function sumStrings(num1, num2) {
+    // We add these numbers as we would do it in columns
+    // Example
+    //  439
+    // + 21
+    // ----
+    //  460
+    // If the length of one of the numbers is less than the length of the another one, we add zeros to the
+    // beginning of the number with the smallest length
+    // Example
+    // num1 = "1568", num2 = "45" -> num2 = "0045"
+
+    let minStr, maxStr, zeros = "";
+    let numZeros = 0;
+
+    if (num1.length < num2.length) {
+        numZeros = num2.length - num1.length;
+        minStr = num1;
+        maxStr = num2;
+    } else if (num1.length > num2.length) {
+        numZeros = num1.length - num2.length;
+        minStr = num2;
+        maxStr = num1;
+    } else {
+        minStr = num1;
+        maxStr = num2;
+    }
+
+    for (let i = 0; i < numZeros; i++) zeros += "0";
+    minStr = zeros + minStr;
+
+    let res = [];
+    let tens = 0; // количество десятков
+
+    for (let i = maxStr.length - 1; i >= 0; i--) {
+        let mod = (Number(maxStr[i]) + Number(minStr[i]) + tens) % 10;
+        res.unshift(mod);
+        tens = ((Number(maxStr[i]) + Number(minStr[i]) + tens) - mod) / 10;
+    }
+    if (tens > 0) res.unshift(tens);
+    if (res[0] === 0) res.shift();
+
+    return res.join("");
+}
