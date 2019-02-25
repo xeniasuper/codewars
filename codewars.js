@@ -570,7 +570,7 @@ let fibonacci = function(n) {
  * @param {string} num2
  * @return {string}
  */
-function sumStrings(num1, num2) {
+function sumBigNumStrings(num1, num2) {
     // We add these numbers as we would do it in columns
     // Example
     //  439
