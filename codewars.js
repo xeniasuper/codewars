@@ -614,3 +614,90 @@ function sumBigNumStrings(num1, num2) {
 
     return res.join("");
 }
+
+// Problem 21
+// Given an n x n array, return the array elements arranged from outermost elements to the middle element,
+// traveling clockwise.
+// Example
+// [[1,2,3],
+//  [4,5,6],  -> [1,2,3,6,9,8,7,4,5]
+//  [7,8,9]]
+
+
+/**
+ * Arranges elements from outermost ones to the middle element, traveling clockwise.
+ * @param {array} array
+ * @return {array}
+ */
+function snail(array) {
+    if (array.length === 1 && array[0].length === 0) return []; // in case when array is [[]]
+
+    let startCol = 0;
+    let startRow = 0;
+    let stopCol = array.length - 1;
+    let stopRow = 0;
+
+    let snailed = [];
+    let numElem = array.length ** 2;
+
+    // First, we look at 'outer' elements of a matrix (1st row -> last column -> last row and -> 1st column)
+    // Then we do the same things with an 'inner matrix' of that matrix, by not looking on the 'outer' elements
+    // Example
+    // Matrix           Outer elements     Inner matrix
+    // |1   2   3   4|  |1   2   3   4|
+    // |5   6   7   8|  |5           8|    |6    7|     Then we look for 'outer' elements of the inner matrix and so on
+    // |9  10  11  12|  |9          12|    |10  11|
+    // |13 14  15  16|  |13 14  15  16|
+
+    let numInnerMatrix = 0; // to count how many inner matrices we have
+
+    while (snailed.length < numElem) {
+        //working with 'outer' elements
+
+        // in case when the matrix has only one element
+        if (startCol === stopCol && startRow === stopRow) snailed.push(array[stopRow][stopCol]);
+
+        // go through the 1st row
+        if (startCol === startRow) {
+            while (startCol < stopCol) {
+                snailed.push(array[startRow][startCol]);
+                startCol++;
+            }
+        }
+
+        // go through the last column
+        if (startCol === stopCol) {
+            stopRow = array.length - numInnerMatrix - 1;
+            while (startRow < stopRow) {
+                snailed.push(array[startRow][startCol]);
+                startRow++;
+            }
+        }
+
+        // go through the last row
+        if (startRow === stopRow) {
+            stopCol = numInnerMatrix; // WARNING
+            while (startCol > stopCol) {
+                snailed.push(array[startRow][startCol]);
+                startCol--;
+            }
+        }
+
+        // go through the 1st column
+        if (startCol === stopCol) {
+            stopRow = numInnerMatrix; // WARNING
+            while (startRow > stopRow) {
+                snailed.push(array[startRow][startCol]);
+                startRow--;
+            }
+        }
+
+        numInnerMatrix++;
+        startCol++;
+        startRow++;
+        stopCol = array.length - numInnerMatrix - 1;
+        stopRow = array.length - numInnerMatrix - 1;
+        // working with the inner matrix
+    }
+    return snailed;
+}
