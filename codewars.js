@@ -701,3 +701,64 @@ function snail(array) {
     }
     return snailed;
 }
+
+
+// Problem 22
+// Your task in order to complete this Kata is to write a function which formats a duration,
+// given as a number of seconds, in a human-friendly way.
+// The function must accept a non-negative integer. If it is zero, it just returns "now". Otherwise,
+// the duration is expressed as a combination of years, days, hours, minutes and seconds.
+// Example
+// 3662 ->  "1 hour, 1 minute and 2 seconds"
+
+/**
+ * Formats a duration in a human-friendly way.
+ * @param {number} seconds
+ * @return {string}
+ */
+function formatDuration (seconds) {
+    // Complete this function
+    if (seconds < 0) throw "seconds must be >= 0";
+    if (seconds === 0) return "now";
+
+    let time = [];
+
+    let secs = seconds % 60;
+    seconds = (seconds - secs) / 60;
+    pushTime(secs, "second", time); // see this helper function below
+
+    let minutes = seconds % 60;
+    seconds = (seconds - minutes) / 60;
+    pushTime(minutes, "minute", time);
+
+    let hours = seconds % 24;
+    seconds = (seconds - hours) / 24;
+    pushTime(hours, "hour", time);
+
+    let days = seconds % 365;
+    seconds = (seconds - days) / 365;
+    pushTime(days, "day", time);
+
+    let years = seconds;
+    pushTime(years, "year", time);
+
+    let timePhrase = "";
+
+    for (let i = time.length - 1; i >= 0; i--) {
+        if (i > 1) timePhrase += time[i] + ", ";
+        else if (i === 1) timePhrase += time[i] + " and ";
+        else timePhrase += time[i];
+    }
+
+    return timePhrase;
+}
+
+/**
+ * Pushes a period of time and its string representation to an array
+ * @param {number} period
+ * @param {string} strPeriod
+ * @param {array} arr
+ */
+function pushTime(period, strPeriod, arr) {
+    if (period) arr.push(period + " " + strPeriod + (period > 1 ? "s" : ""));
+}
