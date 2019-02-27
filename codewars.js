@@ -725,7 +725,7 @@ function formatDuration (seconds) {
 
     let secs = seconds % 60;
     seconds = (seconds - secs) / 60;
-    pushTime(secs, "second", time); // see this helper function below
+    pushTime(secs, "second", time); // see this function below
 
     let minutes = seconds % 60;
     seconds = (seconds - minutes) / 60;
@@ -761,4 +761,123 @@ function formatDuration (seconds) {
  */
 function pushTime(period, strPeriod, arr) {
     if (period) arr.push(period + " " + strPeriod + (period > 1 ? "s" : ""));
+}
+
+// Problem 23
+// Create a Warrior class
+// It must support level, rank, experience, achievements, training(event), and battle(enemy_level) methods
+
+// Create a Warrior class
+// It must support level, rank, experience, achievements, training(event), and battle(enemy_level) methods
+
+/**
+ * Represents a warrior
+ * @constructor
+ */
+function Warrior() {
+    let _experience = 100;
+
+    /**
+     * Computes the experience of a warrior
+     * @return {number}
+     */
+    this.experience = function() {
+        if (_experience >= 10000) return 10000;
+        return _experience};
+
+    /**
+     * Computes the level of a warrior
+     * @return {number}
+     */
+    this.level = function () {
+        if (_experience >= 10000) return 100;
+        return Math.floor(_experience / 100);
+    };
+
+    let ranks = {
+        "Pushover" : [1, 9],
+        "Novice" : [10, 19],
+        "Fighter" : [20, 29],
+        "Warrior" : [30, 39],
+        "Veteran": [40, 49],
+        "Sage" : [50, 59],
+        "Elite" : [60, 69],
+        "Conqueror": [70, 79],
+        "Champion" : [80, 89],
+        "Master" : [90, 99],
+        "Greatest": [100, 100]
+    };
+
+    /**
+     * Computes the rank of a warrior
+     * @return {string}
+     */
+    this.rank = function() {
+        for (let rankProp in ranks) {
+            let min = ranks[rankProp][0];
+            let max = ranks[rankProp][1];
+            let level = this.level();
+
+            if (min <= level && level <= max) {
+                return rankProp;
+            }
+        }
+    };
+
+    let _achievements = [];
+
+    /**
+     * Gets the achievements of a warrior
+     * @return {Array}
+     */
+    this.achievements = () => _achievements;
+
+    /**
+     * Trains the warrior
+     * @param {array} event - [{string} description, {number} experiencePoints]
+     * @return {string} - the description (event[0]) or says that a warrior is not strong enough
+     */
+    this.training = function (event) {
+        let description = event[0];
+        let experPoints = event[1];
+        let minLevel = event[2];
+        let level = this.level();
+
+        if (level >= minLevel) {
+            _experience += experPoints;
+            _achievements.push(description);
+            return description;
+        } else return "Not strong enough";
+    };
+
+    /**
+     * Performs a battle between a warrior and his/her enemy
+     * @param {number} enemyLevel
+     * @return {string} - information about the battle result
+     */
+    this.battle = function (enemyLevel) {
+        let warriorLevel = this.level();
+        let diff = enemyLevel - warriorLevel;
+
+        if (enemyLevel < 1 || enemyLevel > 100) return "Invalid level";
+        if (diff <= -2) return "Easy fight";
+        if (diff === 0) {
+            _experience += 10;
+            return "A good fight";
+        } else if (diff === -1) {
+            _experience += 5;
+            return "A good fight";
+        } else if (diff >= 1) {
+
+            let warriorRank = this.rank();
+            let enemyRank = this.rank.apply({level : () => enemyLevel});
+
+            if (diff >= 5 && ranks[enemyRank][0] > ranks[warriorRank][0]) {
+                return "You've been defeated";
+            } else {
+                _experience += 20 * diff**2;
+                return "An intense fight";
+            }
+        }
+    }
 }
