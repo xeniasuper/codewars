@@ -881,3 +881,57 @@ function Warrior() {
         }
     }
 }
+
+
+// Problem 24
+// Write a function called sumIntervals/sum_intervals() that accepts an array of intervals,
+// and returns the sum of all the interval lengths. Overlapping intervals should only be counted once.
+// Intervals
+// Intervals are represented by a pair of integers in the form of an array.
+// The first value of the interval will always be less than the second value.
+// Interval example: [1, 5] is an interval from 1 to 5. The length of this interval is 4.
+// Overlapping Intervals
+// List containing overlapping intervals:
+// [
+//    [1,4],
+//    [7, 10],
+//    [3, 5]
+// ]
+// The sum of the lengths of these intervals is 7. Since [1, 4] and [3, 5] overlap,
+// we can treat the interval as [1, 5], which has a length of 4.
+/**
+ * Counts the sum of lengths of intervals
+ * @param {array} intervals - 2D array of intervals, intervals[i][0] -- the start of an interval
+ *                                                   intervals[i][1] -- the end of an interval
+ * @return {number}
+ */
+function sumIntervals(intervals) {
+    intervals.sort((subArr1, subArr2)=>subArr1[0] - subArr2[0]);
+    let starts = [];
+    let ends = [];
+    let sum = 0;
+
+    for (let i = 0; i < intervals.length; i++) {
+        let start = intervals[i][0];
+        let end = intervals[i][1];
+
+        if (starts.length && ends.length) {
+
+            let endsLastItem = ends[ends.length-1];
+            if (start <= endsLastItem) {
+                end = Math.max(endsLastItem, intervals[i][1]);
+                ends.splice(i-1, 1, end);
+            } else {
+                starts.push(start);
+                ends.push(end);
+            }
+        } else {
+            starts.push(start);
+            ends.push(end);
+        }
+    }
+    for (let i = 0; i < starts.length; i++) {
+        sum += (ends[i] - starts[i])
+    }
+    return sum;
+}
